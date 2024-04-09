@@ -10,7 +10,20 @@
 //                amount also increasing/decreasing the size of the heap
 void *malloc(size_t);
 
-
+// In order to FREE memory we need to know the following:
+//      1. size of memory block to be freed
+//      2. since heap memory provided by the OS is contiguous, we can only
+//         release memory at the end of the heap, hence we keep the block
+//         marked as free or not free
+// When a program requests for `size` bytes of memory, we calculate
+// `total_size` = `header_size` + `size`
+struct header_t {
+    size_t size;
+    unsigned is_free;       // remember that unsigned is how to create
+                            // a boolean flag in C
+    // Keeping track of the memory allocated by our own malloc function
+    struct header_t* next;
+};
 
 
 
